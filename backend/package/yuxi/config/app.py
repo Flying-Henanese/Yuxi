@@ -199,6 +199,20 @@ class Config(BaseModel):
             # 加载自定义供应商
             if "model_names" in custom_config:
                 self._load_custom_model_providers(custom_config["model_names"])
+            if "embed_model_names" in custom_config:
+                for k, v in custom_config["embed_model_names"].items():
+                    self.embed_model_names[k] = EmbedModelInfo(**v)
+            if "reranker_names" in custom_config:
+                for k, v in custom_config["reranker_names"].items():
+                    self.reranker_names[k] = RerankerInfo(**v)
+
+            # 加载自定义嵌入模型
+            if "embed_model_names" in custom_config:
+                self._load_custom_embed_models(custom_config["embed_model_names"])
+
+            # 加载自定义重排序模型
+            if "reranker_names" in custom_config:
+                self._load_custom_rerankers(custom_config["reranker_names"])
 
         except Exception as e:
             logger.error(f"Failed to load custom providers from {custom_config_file}: {e}")
@@ -213,8 +227,31 @@ class Config(BaseModel):
             except Exception as e:  # noqa: BLE001
                 logger.warning(f"Skip invalid custom provider {provider}: {e}")
 
+    def _load_custom_embed_models(self, embed_data: dict[str, Any]) -> None:
+        """加载自定义嵌入模型"""
+        for model_id, model_data in (embed_data or {}).items():
+            try:
+                self.embed_model_names[model_id] = EmbedModelInfo(**model_data)
+            except Exception as e:  # noqa: BLE001
+                logger.warning(f"Skip invalid custom embed model {model_id}: {e}")
+
+    def _load_custom_rerankers(self, rerank_data: dict[str, Any]) -> None:
+        """加载自定义重排序模型"""
+        for model_id, model_data in (rerank_data or {}).items():
+            try:
+                self.reranker_names[model_id] = RerankerInfo(**model_data)
+            except Exception as e:  # noqa: BLE001
+                logger.warning(f"Skip invalid custom reranker {model_id}: {e}")
+
     def _handle_environment(self) -> None:
         """处理环境变量和运行时状态"""
+        # 处理基础配置
+        self.default_model = os.getenv("DEFAULT_MODEL") or self.default_model
+        self.fast_model = os.getenv("FAST_MODEL") or self.fast_model
+        self.embed_model = os.getenv("EMBED_MODEL") or self.embed_model
+        self.reranker = os.getenv("RERANKER") or self.reranker
+        self.content_guard_llm_model = os.getenv("CONTENT_GUARD_LLM_MODEL") or self.content_guard_llm_model
+
         # 处理模型目录
         self.model_dir = os.environ.get("MODEL_DIR") or self.model_dir
         if self.model_dir:

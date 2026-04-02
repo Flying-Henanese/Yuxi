@@ -107,12 +107,13 @@ def select_model(model_provider=None, model_name=None, model_spec=None):
         model_provider = model_provider or spec_provider
         model_name = model_name or spec_model_name
 
-    if model_provider is None or not model_name:
+    if not model_provider or not model_name:
         default_provider, default_model = split_model_spec(getattr(config, "default_model", ""))
         model_provider = model_provider or default_provider
         model_name = model_name or default_model
 
-    assert model_provider, "Model provider not specified"
+    if not model_provider:
+        raise ValueError("Model provider not specified and no default model configured.")
 
     model_info = config.model_names.get(model_provider)
     if not model_info:
