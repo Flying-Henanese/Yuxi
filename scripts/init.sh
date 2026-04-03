@@ -5,53 +5,53 @@
 
 set -e
 
-echo "🚀 Initializing Yuxi project..."
-echo "=================================="
+# echo "🚀 Initializing Yuxi project..."
+# echo "=================================="
 
-# Check if .env file exists
-if [ -f ".env" ]; then
-    echo "✅ .env file already exists. Skipping environment setup."
-else
-    echo "📝 .env file not found. Let's set up your environment variables."
-    echo ""
+# # Check if .env file exists
+# if [ -f ".env" ]; then
+#     echo "✅ .env file already exists. Skipping environment setup."
+# else
+#     echo "📝 .env file not found. Let's set up your environment variables."
+#     echo ""
 
-    # Get SILICONFLOW_API_KEY
-    echo "🔑 SiliconFlow API Key required"
-    echo "Get your API key from: https://cloud.siliconflow.cn/i/Eo5yTHGJ"
-    while true; do
-        read -s -p "Please enter your SILICONFLOW_API_KEY: " SILICONFLOW_API_KEY
-        echo ""
-        if [ -z "$SILICONFLOW_API_KEY" ]; then
-            echo "❌ API Key cannot be empty. Please try again."
-        else
-            break
-        fi
-    done
+#     # Get SILICONFLOW_API_KEY
+#     echo "🔑 SiliconFlow API Key required"
+#     echo "Get your API key from: https://cloud.siliconflow.cn/i/Eo5yTHGJ"
+#     while true; do
+#         read -s -p "Please enter your SILICONFLOW_API_KEY: " SILICONFLOW_API_KEY
+#         echo ""
+#         if [ -z "$SILICONFLOW_API_KEY" ]; then
+#             echo "❌ API Key cannot be empty. Please try again."
+#         else
+#             break
+#         fi
+#     done
 
-    # Get TAVILY_API_KEY (optional)
-    echo ""
-    echo "🔍 Tavily API Key (optional) - for search service"
-    echo "Get your API key from: https://app.tavily.com/"
-    read -p "Please enter your TAVILY_API_KEY (press Enter to skip): " TAVILY_API_KEY
+#     # Get TAVILY_API_KEY (optional)
+#     echo ""
+#     echo "🔍 Tavily API Key (optional) - for search service"
+#     echo "Get your API key from: https://app.tavily.com/"
+#     read -p "Please enter your TAVILY_API_KEY (press Enter to skip): " TAVILY_API_KEY
 
-    # Create .env file
-    cat > .env << EOF
-# SiliconFlow API Key (required)
-SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
+#     # Create .env file
+#     cat > .env << EOF
+# # SiliconFlow API Key (required)
+# SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
 
-# Tavily API Key (optional - for search service)
-EOF
+# # Tavily API Key (optional - for search service)
+# EOF
 
-    if [ -n "$TAVILY_API_KEY" ]; then
-        echo "TAVILY_API_KEY=${TAVILY_API_KEY}" >> .env
-    fi
+#     if [ -n "$TAVILY_API_KEY" ]; then
+#         echo "TAVILY_API_KEY=${TAVILY_API_KEY}" >> .env
+#     fi
 
-    echo "✅ .env file created successfully!"
-fi
+#     echo "✅ .env file created successfully!"
+# fi
 
-echo ""
-echo "📦 Pulling Docker images..."
-echo "========================="
+# echo ""
+# echo "📦 Pulling Docker images..."
+# echo "========================="
 
 # List of Docker images to pull
 images=(
@@ -79,8 +79,8 @@ for image in "${images[@]}"; do
     fi
 done
 
-echo ""
-echo "🎉 Initialization complete!"
-echo "=========================="
-echo "You can now run: docker compose up -d --build"
-echo "This will start all services in development mode with hot-reload enabled."
+# echo ""
+# echo "🎉 Initialization complete!"
+# echo "=========================="
+# echo "You can now run: docker compose up -d --build"
+# echo "This will start all services in development mode with hot-reload enabled."

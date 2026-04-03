@@ -1,3 +1,4 @@
+# 给所有的容器都加上标签
 x-project-labels: &yuxi-labels
   project: "yuxi"
 

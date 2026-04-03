@@ -107,6 +107,7 @@ def select_model(model_provider=None, model_name=None, model_spec=None):
         model_provider = model_provider or spec_provider
         model_name = model_name or spec_model_name
 
+    # 如果没有指定提供者和模型名称，尝试使用默认模型
     if not model_provider or not model_name:
         default_provider, default_model = split_model_spec(getattr(config, "default_model", ""))
         model_provider = model_provider or default_provider

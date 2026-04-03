@@ -199,6 +199,7 @@ class Config(BaseModel):
             # 加载自定义供应商
             if "model_names" in custom_config:
                 self._load_custom_model_providers(custom_config["model_names"])
+            # 对于自定义的嵌入模型和重排序模型，我们也需要加载
             if "embed_model_names" in custom_config:
                 for k, v in custom_config["embed_model_names"].items():
                     self.embed_model_names[k] = EmbedModelInfo(**v)
