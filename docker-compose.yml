@@ -44,9 +44,8 @@ services:
     build:
       context: .
       dockerfile: docker/api.Dockerfile
-    image: yuxi-api:0.6.dev
-    container_name: api-dev-yuxi
-    labels: *yuxi-labels
+    image: yuxi-api:0.6.0
+    container_name: api-dev
     working_dir: /app
     volumes:
       - ./backend/server:/app/server
@@ -92,9 +91,8 @@ services:
     build:
       context: .
       dockerfile: docker/api.Dockerfile
-    image: yuxi-api:0.6.dev
-    container_name: worker-dev-yuxi
-    labels: *yuxi-labels
+    image: yuxi-api:0.6.0
+    container_name: worker-dev
     working_dir: /app
     volumes:
       - ./backend/server:/app/server
@@ -132,9 +130,8 @@ services:
     build:
       context: ./docker/sandbox_provisioner
       dockerfile: Dockerfile
-    image: yuxi-api:0.6.dev
-    container_name: sandbox-provisioner-yuxi
-    labels: *yuxi-labels
+    image: yuxi-sandbox-provisioner:0.6.0
+    container_name: sandbox-provisioner
     volumes:
       - ./saves:/app/saves
       - ./docker/sandbox_provisioner/app.py:/app/app.py:ro
@@ -186,9 +183,8 @@ services:
       context: .
       dockerfile: docker/web.Dockerfile
       target: development
-    image: yuxi-web:0.6.dev
-    container_name: web-dev-yuxi
-    labels: *yuxi-labels
+    image: yuxi-web:0.6.0
+    container_name: web-dev
     volumes:
       - ./web/src:/app/src
       - ./web/public:/app/public
